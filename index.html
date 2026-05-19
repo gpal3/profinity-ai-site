@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profinity AI | AI for Retail Profitability</title>
+  <meta name="description" content="Profinity AI helps retailers improve pricing, markdowns, forecasting, inventory performance, supplier cost decisions, and margin growth using enterprise-grade decision intelligence." />
+  <style>
+    :root {
+      --navy: #07111f;
+      --navy-2: #0f1f35;
+      --blue: #2563eb;
+      --blue-2: #1d4ed8;
+      --emerald: #10b981;
+      --emerald-2: #059669;
+      --amber: #f59e0b;
+      --text: #0f172a;
+      --muted: #64748b;
+      --light: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--light);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+    img { max-width: 100%; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 17, 31, 0.90);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .logo {
+      height: 42px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-fallback {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--emerald), var(--blue));
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: white;
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      font-size: 14px;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .nav-links a:hover { color: white; }
+
+    .nav-cta {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: white;
+      color: var(--navy) !important;
+      font-weight: 800;
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.35), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.25), transparent 26%),
+        linear-gradient(135deg, var(--navy), var(--navy-2));
+      color: white;
+      padding: 96px 22px 82px;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px;
+      color: rgba(255,255,255,0.84);
+      font-size: 13px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 22px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--emerald);
+      box-shadow: 0 0 0 6px rgba(16,185,129,0.14);
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 0.96;
+      margin: 0 0 24px;
+      letter-spacing: -0.07em;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: rgba(255,255,255,0.78);
+      max-width: 680px;
+      margin: 0 0 30px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 800;
+      border: 1px solid transparent;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--emerald), #22c55e);
+      color: white;
+      box-shadow: 0 18px 36px rgba(16,185,129,0.24);
+    }
+
+    .btn-primary:hover { box-shadow: 0 20px 42px rgba(16,185,129,0.32); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border-color: rgba(255,255,255,0.16);
+    }
+
+    .btn-light {
+      background: white;
+      color: var(--navy);
+      border-color: var(--border);
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 30px;
+      padding: 28px;
+      box-shadow: 0 28px 90px rgba(0,0,0,0.28);
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 22px;
+      padding: 22px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 32px;
+      letter-spacing: -0.05em;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 6px;
+      color: rgba(255,255,255,0.72);
+      font-size: 14px;
+    }
+
+    .mini-panel {
+      border-radius: 22px;
+      padding: 20px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.78);
+      font-size: 14px;
+    }
+
+    .mini-panel strong {
+      display: block;
+      color: white;
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+
+    .section { padding: 86px 22px; }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      max-width: 780px;
+      margin-bottom: 36px;
+    }
+
+    .center { text-align: center; margin-left: auto; margin-right: auto; }
+
+    .kicker {
+      color: var(--blue);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+      margin: 0 0 16px;
+    }
+
+    .lead {
+      font-size: 18px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .grid-4,
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 28px;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+      height: 100%;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      letter-spacing: -0.03em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .card a.inline-link {
+      display: inline-flex;
+      margin-top: 16px;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      background: #eff6ff;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .dark-panel {
+      background: var(--navy);
+      color: white;
+      border-radius: 34px;
+      padding: 46px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .dark-panel p { color: rgba(255,255,255,0.72); }
+
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .check {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: rgba(16,185,129,0.18);
+      color: #34d399;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      margin-top: 1px;
+    }
+
+    .solution-tabs {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .tab-buttons {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tab-button {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      padding: 16px;
+      border-radius: 18px;
+      text-align: left;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+    }
+
+    .tab-button span {
+      display: block;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .tab-button.active {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+
+    .tab-button.active span { color: rgba(255,255,255,0.72); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #3730a3;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .process {
+      counter-reset: step;
+    }
+
+    .process .card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process .card::before {
+      counter-increment: step;
+      content: "0" counter(step);
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      color: #e2e8f0;
+      font-weight: 900;
+      font-size: 40px;
+      letter-spacing: -0.08em;
+    }
+
+    .pilot {
+      background: linear-gradient(135deg, #ffffff, #f1f5f9);
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      padding: 44px;
+      box-shadow: var(--shadow);
+    }
+
+    .pilot-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+
+    .price-pill {
+      padding: 10px 14px;
+      background: #dcfce7;
+      color: #166534;
+      border-radius: 999px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .founder {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .founder-photo {
+      min-height: 360px;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: linear-gradient(135deg, #dbeafe, #dcfce7);
+    }
+
+    .founder-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    details {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px 22px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+    }
+
+    details + details { margin-top: 12px; }
+
+    summary {
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 17px;
+    }
+
+    details p {
+      color: var(--muted);
+      margin: 12px 0 0;
+    }
+
+    .contact-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      padding: 38px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font: inherit;
+      color: var(--text);
+      background: #fff;
+    }
+
+    textarea { min-height: 112px; resize: vertical; }
+
+    .footer-cta {
+      background: linear-gradient(135deg, var(--navy), #0b2a4a);
+      color: white;
+      text-align: center;
+      padding: 86px 22px;
+    }
+
+    .footer-cta h2 { max-width: 850px; margin: 0 auto 18px; }
+    .footer-cta p { color: rgba(255,255,255,0.74); max-width: 680px; margin: 0 auto; font-size: 18px; }
+
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.56);
+      padding: 28px 22px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1000px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { gap: 14px; font-size: 13px; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner,
+      .dark-panel,
+      .founder,
+      .grid-2,
+      .solution-tabs,
+      .contact-panel {
+        grid-template-columns: 1fr;
+      }
+      .grid-3 { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero { padding-top: 72px; }
+      .pilot-top { flex-direction: column; }
+    }
+
+    @media (max-width: 560px) {
+      .metric-grid, .grid-4 { grid-template-columns: 1fr; }
+      .dark-panel, .pilot, .card, .contact-panel { padding: 24px; border-radius: 22px; }
+      .section { padding: 64px 18px; }
+      .hero { padding-left: 18px; padding-right: 18px; }
+      .cta-row .btn { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Profinity AI home">
+        <img src="images/logo.png" alt="Profinity AI Logo" class="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+        <span class="brand-fallback" style="display:none;"><span class="mark">P</span> Profinity AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="#problem">Problem</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#pilot">Pilot</a>
+        <a href="#faq">FAQ</a>
+        <a class="nav-cta" href="#contact">Book a Call</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Enterprise AI for retail profit growth</div>
+        <h1>AI that increases retail profitability.</h1>
+        <p>Profinity AI helps retailers improve pricing, markdowns, forecasting, inventory performance, and commercial decision-making with enterprise-grade decision intelligence.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#contact">Book a Strategy Call →</a>
+          <a class="btn btn-secondary" href="#pilot">Explore 90-Day Pilot</a>
+          <a class="btn btn-secondary" href="#solutions">View Solutions</a>
+        </div>
+      </div>
+
+      <div class="hero-card" aria-label="Business impact snapshot">
+        <div class="metric-grid">
+          <div class="metric"><strong>2–5%</strong><span>Target EBITDA uplift opportunities</span></div>
+          <div class="metric"><strong>90</strong><span>Days to measurable pilot outcomes</span></div>
+          <div class="metric"><strong>4</strong><span>High-impact profit levers</span></div>
+          <div class="metric"><strong>AI</strong><span>Built for commercial decisions</span></div>
+        </div>
+        <div class="mini-panel">
+          <strong>What visitors can explore</strong>
+          Pricing leakage, markdown opportunity, demand-risk signals, category performance, and pilot roadmap.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" id="problem">
+    <div class="container">
+      <div class="section-header">
+        <div class="kicker">The problem</div>
+        <h2>Retailers do not lose margin in one place. They leak it across decisions.</h2>
+        <p class="lead">Pricing, markdowns, promotions, demand signals, supplier costs, and inventory actions often operate in silos. The result is slower decisions, excess stock, missed sales, and avoidable margin erosion.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card"><div class="icon">01</div><h3>Delayed markdowns</h3><p>Late clearance actions reduce sell-through and increase inventory write-offs.</p><a class="inline-link" href="#solutions">See markdown AI →</a></div>
+        <div class="card"><div class="icon">02</div><h3>Pricing leakage</h3><p>Teams lack decision support to balance demand, margin, competition, and inventory.</p><a class="inline-link" href="#solutions">See pricing AI →</a></div>
+        <div class="card"><div class="icon">03</div><h3>Forecast misses</h3><p>Inaccurate demand signals create stockouts, overstock, and working capital pressure.</p><a class="inline-link" href="#solutions">See demand AI →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="platform">
+    <div class="container">
+      <div class="dark-panel">
+        <div>
+          <div class="kicker" style="color:#34d399;">The platform</div>
+          <h2>Decision intelligence for retail profit teams.</h2>
+          <p>Profinity AI converts retail data into recommended actions across pricing, markdowns, inventory, forecasting, and promotion performance. It is designed for commercial teams who need explainable actions, not black-box AI outputs.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#contact">Request Demo</a>
+            <a class="btn btn-secondary" href="#how-it-works">How it works</a>
+          </div>
+        </div>
+        <ul class="check-list">
+          <li><span class="check">✓</span><span>Pricing intelligence and margin opportunity detection</span></li>
+          <li><span class="check">✓</span><span>Markdown optimization for faster sell-through</span></li>
+          <li><span class="check">✓</span><span>Demand forecasting and replenishment signals</span></li>
+          <li><span class="check">✓</span><span>Inventory risk alerts and dead-stock reduction</span></li>
+          <li><span class="check">✓</span><span>Executive dashboard for measurable commercial impact</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="solutions">
+    <div class="container">
+      <div class="section-header">
+        <div class="kicker">Explore solutions</div>
+        <h2>Clickable solution areas for retail leaders.</h2>
+        <p class="lead">Use the tabs below to make the page feel more interactive and to help visitors understand what each capability does.</p>
+      </div>
+
+      <div class="solution-tabs">
+        <div class="tab-buttons" role="tablist" aria-label="Solution tabs">
+          <button class="tab-button active" type="button" data-tab="pricing">Pricing Intelligence<span>Margin, elasticity, competition and rules</span></button>
+          <button class="tab-button" type="button" data-tab="markdown">Markdown Optimization<span>Clearance timing and sell-through improvement</span></button>
+          <button class="tab-button" type="button" data-tab="forecast">Forecast & Inventory Signals<span>Demand risk, stockout and overstock prevention</span></button>
+          <button class="tab-button" type="button" data-tab="exec">Executive Profit Cockpit<span>Impact tracking and leadership decisions</span></button>
+        </div>
+
+        <div class="card">
+          <div class="tab-content active" id="tab-pricing">
+            <h3>Pricing Intelligence</h3>
+            <p>Identify SKUs and categories where margin is leaking because price, demand, competition, promotion depth, or inventory position are not aligned.</p>
+            <div class="pill-row"><span class="pill">Price gap detection</span><span class="pill">Margin simulation</span><span class="pill">Elasticity signals</span><span class="pill">Rule-based guardrails</span></div>
+            <a class="inline-link" href="#contact">Discuss pricing pilot →</a>
+          </div>
+
+          <div class="tab-content" id="tab-markdown">
+            <h3>Markdown Optimization</h3>
+            <p>Recommend markdown timing and depth by category, location, product lifecycle, and sell-through risk so teams can reduce write-offs and improve stock liquidation.</p>
+            <div class="pill-row"><span class="pill">Sell-through risk</span><span class="pill">Clearance actions</span><span class="pill">Dead-stock reduction</span><span class="pill">Category-level playbooks</span></div>
+            <a class="inline-link" href="#contact">Discuss markdown pilot →</a>
+          </div>
+
+          <div class="tab-content" id="tab-forecast">
+            <h3>Forecast & Inventory Signals</h3>
+            <p>Convert sales, seasonality, promotional events, supply constraints, and store/category behaviour into early warning signals for stockouts and excess inventory.</p>
+            <div class="pill-row"><span class="pill">Demand sensing</span><span class="pill">Stockout alerts</span><span class="pill">Overstock signals</span><span class="pill">Replenishment support</span></div>
+            <a class="inline-link" href="#contact">Discuss forecasting pilot →</a>
+          </div>
+
+          <div class="tab-content" id="tab-exec">
+            <h3>Executive Profit Cockpit</h3>
+            <p>Give leadership a single view of profit levers, quantified opportunity, action status, ownership, and value delivered across commercial teams.</p>
+            <div class="pill-row"><span class="pill">Opportunity sizing</span><span class="pill">Action tracker</span><span class="pill">Value measurement</span><span class="pill">Board-ready narrative</span></div>
+            <a class="inline-link" href="#contact">Request cockpit demo →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="use-cases">
+    <div class="container">
+      <div class="section-header center">
+        <div class="kicker">Use cases</div>
+        <h2>Start where profit leakage is visible.</h2>
+        <p class="lead">These sections give visitors more depth and make the site feel like a real product page.</p>
+      </div>
+      <div class="grid-4">
+        <div class="card"><div class="icon">₹</div><h3>Category margin recovery</h3><p>Find margin leakage by SKU, category, region, and channel with prioritized commercial actions.</p></div>
+        <div class="card"><div class="icon">%</div><h3>Promotion performance</h3><p>Measure promotion effectiveness and identify where discounts are not creating incremental value.</p></div>
+        <div class="card"><div class="icon">↘</div><h3>Waste and write-off reduction</h3><p>Use markdown and inventory signals to reduce slow-moving stock and avoidable disposal.</p></div>
+        <div class="card"><div class="icon">◎</div><h3>Decision governance</h3><p>Track what was recommended, accepted, changed, rejected, and delivered as measurable value.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <div class="kicker">How it works</div>
+        <h2>From raw retail data to explainable actions.</h2>
+      </div>
+      <div class="grid-4 process">
+        <div class="card"><h3>Connect data</h3><p>Start with sales, price, margin, inventory, promotion, product, store, and supplier data.</p></div>
+        <div class="card"><h3>Detect leakage</h3><p>Identify where decisions are creating lost margin, excess inventory, or missed demand.</p></div>
+        <div class="card"><h3>Recommend action</h3><p>Generate practical recommendations with commercial guardrails and explainability.</p></div>
+        <div class="card"><h3>Track value</h3><p>Measure accepted actions, realized outcomes, and scale opportunities across teams.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="outcomes">
+    <div class="container">
+      <div class="section-header">
+        <div class="kicker">Outcomes</div>
+        <h2>Built for measurable business impact, not vanity AI.</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card"><div class="icon">₹</div><h3>Margin growth</h3><p>Identify commercial actions that directly improve gross margin and EBITDA.</p></div>
+        <div class="card"><div class="icon">↗</div><h3>Faster sell-through</h3><p>Optimize markdown timing and inventory liquidation decisions by category and location.</p></div>
+        <div class="card"><div class="icon">◎</div><h3>Decision clarity</h3><p>Give merchants, pricing, supply chain, and leadership one aligned view of profit levers.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pilot">
+    <div class="container">
+      <div class="pilot">
+        <div class="pilot-top">
+          <div>
+            <div class="kicker">Launch offer</div>
+            <h2>90-Day Profit Uplift Pilot</h2>
+            <p class="lead">Start with one category, business unit, or region. Profinity AI identifies margin leakage, pricing gaps, markdown opportunities, demand signals, and inventory risks — then converts them into action recommendations.</p>
+          </div>
+          <div class="price-pill">Pilot-ready</div>
+        </div>
+        <div class="grid-3">
+          <div class="card"><h3>Weeks 1–2</h3><p>Data discovery, profit leakage map, baseline KPIs, and opportunity sizing.</p><a class="inline-link" href="#contact">Start discovery →</a></div>
+          <div class="card"><h3>Weeks 3–8</h3><p>Modeling, recommendations, business rule alignment, and merchant review cycles.</p><a class="inline-link" href="#solutions">View capabilities →</a></div>
+          <div class="card"><h3>Weeks 9–12</h3><p>Measured outcomes, executive dashboard, scale roadmap, and annual engagement proposal.</p><a class="inline-link" href="#contact">Discuss roadmap →</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="founder">
+    <div class="container founder">
+      <div class="founder-photo">
+        <img src="images/gayatri.jpeg" alt="Gayatri Pal" onerror="this.style.display='none';">
+      </div>
+      <div class="card">
+        <div class="kicker">Founder credibility</div>
+        <h2>Led by enterprise retail AI experience.</h2>
+        <p class="lead">Profinity AI is founded by Gayatri Pal, an AI and Data Science leader with deep experience across retail, pricing, markdown, forecasting, supply chain, and enterprise transformation.</p>
+        <br />
+        <p>Her background includes leadership roles across Tesco, Target, Walmart, IBM, and applied AI programs spanning retail intelligence, predictive analytics, reliability, optimization, and responsible AI governance.</p>
+        <br />
+        <p><strong>Why this founder can solve your problem:</strong> built by an operator who understands retail unit economics, not a generic AI vendor.</p>
+        <div class="cta-row">
+          <a class="btn btn-light" href="#contact">Invite for discussion</a>
+          <a class="btn btn-light" href="mailto:gayatripal@profinityai.com?subject=Profinity%20AI%20-%20Founder%20Introduction">Email founder</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header center">
+        <div class="kicker">FAQ</div>
+        <h2>Questions a serious retail buyer may ask.</h2>
+      </div>
+
+      <details>
+        <summary>Do we need a large transformation program to start?</summary>
+        <p>No. The recommended starting point is a focused pilot on one category, region, or business unit with clear baseline KPIs and measurable commercial outcomes.</p>
+      </details>
+
+      <details>
+        <summary>What data is needed for a pilot?</summary>
+        <p>Typical inputs include sales, price, margin, promotion, inventory, product hierarchy, store/channel, supplier cost, and calendar/event data. The pilot can start with available data and improve progressively.</p>
+      </details>
+
+      <details>
+        <summary>Is this only a dashboard?</summary>
+        <p>No. The goal is to move beyond reporting into decision recommendations, action tracking, feedback capture, and value measurement.</p>
+      </details>
+
+      <details>
+        <summary>Can Profinity AI work with existing BI and data platforms?</summary>
+        <p>Yes. The solution can be designed to work with existing cloud, BI, data warehouse, lakehouse, and workflow tools rather than replacing the entire technology landscape.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-panel">
+        <div>
+          <div class="kicker">Contact</div>
+          <h2>Book a strategy conversation.</h2>
+          <p class="lead">Share your focus area and the page will open a pre-filled email to Profinity AI.</p>
+          <br>
+          <p><strong>Email:</strong> <a href="mailto:gayatripal@profinityai.com">gayatripal@profinityai.com</a></p>
+        </div>
+
+        <form class="form-grid" id="contactForm">
+          <label>
+            Name
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+          </label>
+
+          <label>
+            Company
+            <input type="text" id="company" name="company" placeholder="Company / retail brand">
+          </label>
+
+          <label>
+            Focus area
+            <select id="focus" name="focus">
+              <option>Pricing intelligence</option>
+              <option>Markdown optimization</option>
+              <option>Forecasting and inventory</option>
+              <option>Executive profit dashboard</option>
+              <option>90-day pilot discussion</option>
+            </select>
+          </label>
+
+          <label>
+            Message
+            <textarea id="message" name="message" placeholder="Briefly describe the opportunity or challenge"></textarea>
+          </label>
+
+          <button class="btn btn-primary" type="submit">Create Email →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer-cta">
+    <h2>Ready to uncover profit leakage in your retail business?</h2>
+    <p>Start with a focused strategy conversation. No large transformation program required.</p>
+    <div class="cta-row" style="justify-content:center;">
+      <a class="btn btn-primary" href="#contact">Book a Strategy Call</a>
+      <a class="btn btn-secondary" href="mailto:gayatripal@profinityai.com?subject=Profinity%20AI%20-%2090%20Day%20Pilot">Discuss 90-Day Pilot</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© 2026 Profinity AI. All rights reserved.</div>
+      <div>AI for Retail Profitability · Pricing · Markdown · Forecasting · Inventory</div>
+    </div>
+  </footer>
+
+  <script>
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selectedTab = button.getAttribute("data-tab");
+
+        tabButtons.forEach((btn) => btn.classList.remove("active"));
+        tabContents.forEach((content) => content.classList.remove("active"));
+
+        button.classList.add("active");
+        const contentToShow = document.getElementById("tab-" + selectedTab);
+        if (contentToShow) {
+          contentToShow.classList.add("active");
+        }
+      });
+    });
+
+    const contactForm = document.getElementById("contactForm");
+
+    contactForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const company = document.getElementById("company").value.trim();
+      const focus = document.getElementById("focus").value;
+      const message = document.getElementById("message").value.trim();
+
+      const subject = encodeURIComponent("Profinity AI enquiry - " + focus);
+      const body = encodeURIComponent(
+        "Hi Gayatri,\n\n" +
+        "I would like to discuss Profinity AI.\n\n" +
+        "Name: " + name + "\n" +
+        "Company: " + company + "\n" +
+        "Focus area: " + focus + "\n\n" +
+        "Message:\n" + message + "\n\n" +
+        "Regards,\n" + name
+      );
+
+      window.location.href = "mailto:gayatripal@profinityai.com?subject=" + subject + "&body=" + body;
+    });
+  </script>
+</body>
+</html>
